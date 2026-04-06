@@ -45,7 +45,7 @@ export default function AboutApp() {
   const handleCancel = () => closeWindow("about");
 
   const renderSidebar = () => (
-    <div className="w-1/3 bg-[#300a24] text-white p-8 flex flex-col justify-between shrink-0 rounded-l-xl border-r border-[#E95420]/30 shadow-[inset_-5px_0_15px_rgba(0,0,0,0.3)]">
+    <div className="w-1/3 bg-[#300a24] text-white p-8 flex flex-col justify-between shrink-0 border-r border-[#E95420]/30 shadow-[inset_-5px_0_15px_rgba(0,0,0,0.3)]">
       <div>
         <div className="flex items-center space-x-3 mb-10">
           <FiPackage size={48} className="text-[#E95420]" />

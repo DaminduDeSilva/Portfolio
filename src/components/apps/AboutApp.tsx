@@ -165,7 +165,7 @@ export default function AboutApp() {
 
       case 5: // PROJECTS
         return (
-          <div className="text-gray-800 h-full overflow-y-auto pr-2 pb-4">
+          <div className="text-gray-800">
             <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Key Projects</h2>
             <div className="space-y-4">
               <div className="bg-gray-50 p-4 border border-gray-200 rounded">
@@ -252,22 +252,31 @@ export default function AboutApp() {
       <div className="flex w-full h-full bg-white">
         {renderSidebar()}
 
-        <div className="flex-1 flex flex-col p-8">
-          <div className="flex-1">{renderContent()}</div>
+        <div className="flex-1 flex flex-col p-8 overflow-hidden">
+          <div className="flex-1 overflow-y-auto pr-2 pb-2">{renderContent()}</div>
 
-          <div className="mt-6 flex justify-end space-x-3">
+          <div className="mt-6 flex justify-end space-x-3 shrink-0">
             {step > 1 && step < 7 && (
               <button onClick={handleBack} className="px-4 py-2 bg-gray-200">
                 Back
               </button>
             )}
 
-            {step < 8 && (
+            {step < 7 && (
               <button
                 onClick={handleNext}
                 className="px-4 py-2 bg-[#E95420] text-white"
               >
                 Next
+              </button>
+            )}
+
+            {step === 7 && (
+              <button
+                disabled
+                className="px-4 py-2 bg-gray-400 text-white cursor-not-allowed"
+              >
+                Installing...
               </button>
             )}
 

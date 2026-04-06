@@ -14,6 +14,7 @@ import TerminalApp from "../apps/TerminalApp";
 import SettingsApp from "../apps/SettingsApp";
 import FileExplorerApp from "../apps/FileExplorerApp";
 import AboutApp from "../apps/AboutApp";
+import ResumeApp from "../apps/ResumeApp";
 import ContactApp from "../apps/ContactApp";
 import SkillsApp from "../apps/SkillsApp";
 import UbuntuCyberWallpaper from "../3d/UbuntuCyberWallpaper";
@@ -79,6 +80,7 @@ export default function Desktop() {
           <SettingsApp />
           <FileExplorerApp />
           <AboutApp />
+          <ResumeApp />
           <ContactApp />
           <SkillsApp />
         </div>

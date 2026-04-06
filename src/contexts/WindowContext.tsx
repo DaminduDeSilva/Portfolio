@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 export type AppId =
   | "terminal"
+  | "resume"
   | "about"
   | "projects"
   | "skills"
@@ -28,6 +29,13 @@ interface WindowContextType {
 }
 
 const defaultWindows: Record<AppId, WindowData> = {
+  resume: {
+    id: "resume",
+    title: "Damindu_De_Silva_CV.pdf - Document Viewer",
+    isOpen: false,
+    isMinimized: false,
+    zIndex: 10,
+  },
   terminal: {
     id: "terminal",
     title: "CLI Terminal",

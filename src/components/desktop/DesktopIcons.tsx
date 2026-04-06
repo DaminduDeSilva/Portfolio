@@ -46,7 +46,7 @@ export default function DesktopIcons() {
           className="absolute flex flex-col items-center justify-center w-24 h-24 rounded-lg hover:bg-white/10 cursor-pointer transition-colors active:cursor-grabbing group select-none"
           onDoubleClick={() => {
             if (icon.id === "about_me") openWindow("about");
-            if (icon.id === "resume") openWindow("contact");
+            if (icon.id === "resume") openWindow("resume");
             if (icon.id === "trash") openWindow("projects");
           }}
         >

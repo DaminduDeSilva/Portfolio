@@ -11,10 +11,11 @@ import {
   FiPackage,
 } from "react-icons/fi";
 import { FaEnvelope, FaTerminal, FaUserCircle, FaUbuntu } from "react-icons/fa";
-import { BsFolder2Open, BsCpu, BsSearch } from "react-icons/bs";
+import { BsFolder2Open, BsCpu, BsSearch, BsFiletypePdf } from "react-icons/bs";
 import { clsx } from "clsx";
 
 const apps: { id: AppId; icon: React.ReactElement; label: string }[] = [
+  { id: "resume", icon: <BsFiletypePdf size={15} />, label: "Resume" },
   { id: "terminal", icon: <FaTerminal size={15} />, label: "Terminal" },
   { id: "about", icon: <FiPackage size={15} />, label: "About_me.deb" },
   { id: "projects", icon: <BsFolder2Open size={15} />, label: "Files" },

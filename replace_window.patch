@@ -1,0 +1,50 @@
+--- src/components/desktop/Window.tsx
++++ src/components/desktop/Window.tsx
+@@ -25,2 +25,3 @@
+   const [initPos, setInitPos] = useState({ x: 100, y: 100 });
++  const sizeRef = useRef<{ width: string; height: string } | null>(null);
+ 
+@@ -39,2 +40,24 @@
+ 
++  useEffect(() => {
++    if (!windowRef.current) return;
++    if (isMaximized) {
++      windowRef.current.style.width = "100%";
++      windowRef.current.style.height = "100%";
++    } else {
++      if (sizeRef.current) {
++        windowRef.current.style.width = sizeRef.current.width;
++        windowRef.current.style.height = sizeRef.current.height;
++      } else {
++        windowRef.current.style.width = `${defaultSize.width}px`;
++        windowRef.current.style.height = `${defaultSize.height}px`;
++      }
++    }
++  }, [isMaximized, defaultSize]);
++
++  const toggleMaximize = () => {
++    if (!isMaximized && windowRef.current) {
++      sizeRef.current = {
++        width: windowRef.current.style.width || `${defaultSize.width}px`,
++        height: windowRef.current.style.height || `${defaultSize.height}px`,
++      };
++    }
++    setIsMaximized(!isMaximized);
++  };
++
+   if (!windowData.isOpen || !mounted) return null;
+@@ -62,4 +85,2 @@
+         top: initPos.y,
+-        width: isMaximized ? "100%" : defaultSize.width,
+-        height: isMaximized ? "100%" : defaultSize.height,
+         zIndex: windowData.zIndex,
+@@ -78,3 +99,3 @@
+         }}
+-        onDoubleClick={() => setIsMaximized(!isMaximized)}
++        onDoubleClick={toggleMaximize}
+       >
+@@ -98,3 +119,3 @@
+               
+-              setIsMaximized(!isMaximized);
++              toggleMaximize();
+             }}

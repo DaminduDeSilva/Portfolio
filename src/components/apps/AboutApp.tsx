@@ -14,6 +14,7 @@ export default function AboutApp() {
   const { windows, closeWindow } = useWindowContext();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(0);
+  const [projectTab, setProjectTab] = useState<'cyber' | 'devops' | 'fullstack'>('cyber');
 
   useEffect(() => {
     if (windows["about"]?.isOpen) {
@@ -55,7 +56,7 @@ export default function AboutApp() {
   ];
 
   const renderSidebar = () => (
-    <div className="w-1/3 bg-[#300a24] text-white p-8 flex flex-col justify-between border-r border-[#E95420]/30">
+    <div className="hidden md:flex w-1/3 bg-[#300a24] text-white p-8 flex-col justify-between border-r border-[#E95420]/30">
       <div>
         <div className="flex items-center space-x-3 mb-10">
           <FiPackage size={48} className="text-[#E95420]" />
@@ -119,7 +120,7 @@ export default function AboutApp() {
           </div>
         );
 
-            case 3: // EDUCATION
+      case 3: // EDUCATION
         return (
           <div className="text-gray-800">
             <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Education</h2>
@@ -141,96 +142,166 @@ export default function AboutApp() {
           </div>
         );
 
-
+      case 4: // EXPERIENCE
         return (
           <div className="text-gray-800">
             <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Experience</h2>
             <div className="space-y-6">
               <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <p className="font-bold text-lg border-b pb-2 mb-2">Freelance Web & Security Consultant</p>
-                <ul className="list-disc ml-5 space-y-1 text-gray-700">
-                  <li>Consulted on full-stack web applications prioritizing security best-practices.</li>
-                  <li>Performed environment hardening and deployment automated workflows via CI/CD for clients.</li>
-                </ul>
-              </div>
-              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <p className="font-bold text-lg border-b pb-2 mb-2">Open Source Contributor</p>
-                <ul className="list-disc ml-5 space-y-1 text-gray-700">
-                  <li>Building and distributing custom utilities across Linux forums.</li>
-                  <li>Exploring security vulnerabilities in modern web architectures.</li>
+                <p className="font-bold text-lg border-b pb-2 mb-2">Intern DevOps Engineer (Dec 2025 - May 2026)</p>
+                <p className="text-gray-600 font-bold mb-3">@ Sri Lanka Telecom</p>
+                <ul className="list-disc ml-5 space-y-2 text-gray-700">
+                  <li>Worked with real production application hosting and deployment.</li>
+                  <li>Managed infrastructure provisioning and firewall operations.</li>
                 </ul>
               </div>
             </div>
-          </div>
-        );
-
-            case 5: // PROJECTS
-        return (
-          <div className="text-gray-800">
-            <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Cyber Security Projects</h2>
-            <div className="space-y-4 mb-6">
-              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <div className="flex justify-between items-start">
-                  <h3 className="font-bold text-lg">Web Domain Scanner & Service Discovery</h3>
-                </div>
-                <p className="text-sm text-gray-600 mb-2">Python • RustScan • Nmap • Gemini API</p>
-                <p className="text-gray-700 text-sm mb-2">Passive & active recon tool with AI LLM wordlist generation, CDN tracking, and API detection.</p>
-                <a href="https://github.com/DaminduDeSilva/web-domain-scanner" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/DaminduDeSilva/web-domain-scanner</a>
-              </div>
-              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <h3 className="font-bold text-lg">Cryptographic CTF Challenge - Web App</h3>
-                <p className="text-sm text-gray-600 mb-2">Python (Flask) • AES • ECDSA</p>
-                <p className="text-gray-700 text-sm mb-2">Simulated challenge with AES-encrypted passwords & ECDSA private key recovery (nonce reuse).</p>
-                <a href="https://github.com/DaminduDeSilva/CTF-Challenge-Cryptography" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/DaminduDeSilva/CTF-Challenge-Cryptography</a>
-              </div>
-              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <h3 className="font-bold text-lg">Android App Security Analysis - InsecureBankv2</h3>
-                <p className="text-sm text-gray-600 mb-2">Burp Suite • JADX • APKTool</p>
-                <p className="text-gray-700 text-sm mb-2">OWASP Mobile security assessment finding insecure storage and weak auth.</p>
-                <a href="https://bit.ly/android-security-analysis" target="_blank" className="text-blue-600 text-sm hover:underline">View Report</a>
-              </div>
-            </div>
-
-            <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Full-Stack Projects</h2>
+            
+            <h2 className="text-2xl font-bold mt-6 mb-4 text-[#E95420]">Volunteering</h2>
             <div className="space-y-4">
-              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <h3 className="font-bold text-lg">Salon Management SaaS Platform</h3>
-                <p className="text-sm text-gray-600 mb-2">Node.js • Supabase • React.js</p>
-                <p className="text-gray-700 text-sm mb-2">Complete platform connecting salons & customers with secure OAuth auth.</p>
-                <a href="https://github.com/Vivora-Solutions" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/Vivora-Solutions</a>
+              <div className="bg-gray-50 p-3 border border-gray-200 rounded">
+                <p className="font-bold text-md text-gray-900">Cyber Rush Dev Team (2025)</p>
+                <p className="text-gray-600 text-sm">Designed interactive cryptography CTF challenges.</p>
               </div>
-              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <h3 className="font-bold text-lg">Healthcare Management Microservices</h3>
-                <p className="text-sm text-gray-600 mb-2">Spring Boot • Angular • Hyperledger Fabric</p>
-                <p className="text-gray-700 text-sm mb-2">Decentralized health records via blockchain, AI diagnosis, and WebRTC streaming.</p>
-                <a href="https://github.com/DaminduDeSilva/Healthcare-Appointment-and-Management-System" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/DaminduDeSilva/Healthcare-Appointment-and-Management-System</a>
+              <div className="bg-gray-50 p-3 border border-gray-200 rounded">
+                <p className="font-bold text-md text-gray-900">CSE 40 Logistics Committee (2025)</p>
+                <p className="text-gray-600 text-sm">Organized the 40th anniversary of UoM CSE Dept.</p>
               </div>
-              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <h3 className="font-bold text-lg">Supply Chain Management Platform</h3>
-                <p className="text-sm text-gray-600 mb-2">React.js • Node.js • MySQL</p>
-                <p className="text-gray-700 text-sm mb-2">End-to-end logistics platform managing railway & truck transit operations.</p>
-                <a href="https://github.com/DaminduDeSilva/Supply-Chain-Management-System" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/DaminduDeSilva/Supply-Chain-Management-System</a>
+              <div className="bg-gray-50 p-3 border border-gray-200 rounded">
+                <p className="font-bold text-md text-gray-900">IESL Robogames (2024/2025)</p>
+                <p className="text-gray-600 text-sm">Member of logistics team for Sri Lanka's largest robotics competition.</p>
               </div>
             </div>
           </div>
         );
 
+      case 5: // PROJECTS
+        return (
+          <div className="text-gray-800 flex flex-col h-full bg-white">
+            <h2 className="text-2xl font-bold mb-4 text-[#E95420] shrink-0">Projects Portfolio</h2>
+            
+            {/* Tabs */}
+            <div className="flex border-b border-gray-200 mb-4 shrink-0 overflow-x-auto">
+              <button 
+                onClick={() => setProjectTab('cyber')}
+                className={`py-2 px-4 font-medium text-sm border-b-2 transition-colors whitespace-nowrap ${projectTab === 'cyber' ? 'border-[#E95420] text-[#E95420]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+              >
+                Cyber Security
+              </button>
+              <button 
+                onClick={() => setProjectTab('devops')}
+                className={`py-2 px-4 font-medium text-sm border-b-2 transition-colors whitespace-nowrap ${projectTab === 'devops' ? 'border-[#E95420] text-[#E95420]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+              >
+                DevOps & Cloud
+              </button>
+              <button 
+                onClick={() => setProjectTab('fullstack')}
+                className={`py-2 px-4 font-medium text-sm border-b-2 transition-colors whitespace-nowrap ${projectTab === 'fullstack' ? 'border-[#E95420] text-[#E95420]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+              >
+                Full-Stack
+              </button>
+            </div>
 
+            {/* Tab Content */}
+            <div className="flex-1 overflow-y-auto pr-2 pb-2 space-y-4">
+              {projectTab === 'cyber' && (
+                <div className="space-y-4 animate-in fade-in duration-300">
+                  <div className="bg-gray-50 p-4 border border-gray-200 rounded hover:border-[#E95420]/30 transition-colors">
+                    <h3 className="font-bold text-lg text-gray-900">Web Domain Scanner & Service Discovery</h3>
+                    <p className="text-xs text-[#E95420] font-mono mb-2 bg-[#E95420]/10 inline-block px-2 py-1 rounded">Python • RustScan • Nmap • Gemini API</p>
+                    <p className="text-gray-700 text-sm mb-3">Passive & active recon tool with AI LLM wordlist generation, CDN tracking, and API detection.</p>
+                    <a href="https://github.com/DaminduDeSilva/web-domain-scanner.git" target="_blank" className="text-blue-600 text-sm hover:underline font-medium">View Source →</a>
+                  </div>
+                  <div className="bg-gray-50 p-4 border border-gray-200 rounded hover:border-[#E95420]/30 transition-colors">
+                    <h3 className="font-bold text-lg text-gray-900">Cryptographic CTF Challenge - Web App</h3>
+                    <p className="text-xs text-[#E95420] font-mono mb-2 bg-[#E95420]/10 inline-block px-2 py-1 rounded">Python (Flask) • AES • ECDSA</p>
+                    <p className="text-gray-700 text-sm mb-3">Simulated challenge with AES-encrypted passwords & ECDSA private key recovery via nonce reuse attack patterns.</p>
+                    <a href="https://github.com/DaminduDeSilva/CTF-Challenge-Cryptography" target="_blank" className="text-blue-600 text-sm hover:underline font-medium">View Source →</a>
+                  </div>
+                  <div className="bg-gray-50 p-4 border border-gray-200 rounded hover:border-[#E95420]/30 transition-colors">
+                    <h3 className="font-bold text-lg text-gray-900">Android App Security Analysis - InsecureBankv2</h3>
+                    <p className="text-xs text-[#E95420] font-mono mb-2 bg-[#E95420]/10 inline-block px-2 py-1 rounded">Burp Suite • JADX • APKTool</p>
+                    <p className="text-gray-700 text-sm mb-3">OWASP Mobile security assessment finding insecure storage and weak authentication mechanisms.</p>
+                    <a href="https://bit.ly/android-security-analysis" target="_blank" className="text-blue-600 text-sm hover:underline font-medium">View Report →</a>
+                  </div>
+                </div>
+              )}
+
+              {projectTab === 'devops' && (
+                <div className="space-y-4 animate-in fade-in duration-300">
+                  <div className="bg-gray-50 p-4 border border-[#E95420]/40 rounded hover:border-[#E95420] transition-colors relative overflow-hidden shadow-sm">
+                    <div className="absolute top-0 right-0 bg-[#E95420] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg tracking-wider">FEATURED</div>
+                    <h3 className="font-bold text-lg text-gray-900 pr-16">CI-Insight: Unified CI/CD Intelligence</h3>
+                    <p className="text-xs text-[#E95420] font-mono mb-2 bg-[#E95420]/10 inline-block px-2 py-1 rounded mt-2">Next.js 16 • Tailwind CSS • App Router</p>
+                    <p className="text-gray-700 text-sm mb-3">An AI-powered CI/CD intelligence platform that unifies pipeline data, enables AI-driven security analysis, and supports DevSecOps workflows through a cinematic, interactive dashboard framework.</p>
+                    <a href="https://github.com/Dark-Side-Mora/ci-insight-presentation" target="_blank" className="text-blue-600 text-sm hover:underline font-medium flex items-center gap-1">
+                      View Platform <span className="text-xs">→</span>
+                    </a>
+                  </div>
+                  <div className="bg-gray-50 p-4 border border-gray-200 rounded hover:border-[#E95420]/30 transition-colors">
+                    <h3 className="font-bold text-lg text-gray-900">MySLT Dashboard Monitoring App</h3>
+                    <p className="text-xs text-[#E95420] font-mono mb-2 bg-[#E95420]/10 inline-block px-2 py-1 rounded mt-1">Sri Lanka Telecom • Infrastructure • Monitoring</p>
+                    <p className="text-gray-700 text-sm mb-0">Engineered a dedicated monitoring service tailored to track operations and visualize core infrastructure health/analytics for the internal MySLT dashboard environment.</p>
+                  </div>
+                </div>
+              )}
+
+              {projectTab === 'fullstack' && (
+                <div className="space-y-4 animate-in fade-in duration-300">
+                  <div className="bg-gray-50 p-4 border border-gray-200 rounded hover:border-[#E95420]/30 transition-colors">
+                    <h3 className="font-bold text-lg text-gray-900">Salon Management SaaS Platform</h3>
+                    <p className="text-xs text-[#E95420] font-mono mb-2 bg-[#E95420]/10 inline-block px-2 py-1 rounded mt-1">Node.js • Supabase • React.js</p>
+                    <p className="text-gray-700 text-sm mb-3">Complete multi-tenant platform connecting individual salons & customers seamlessly with secure OAuth authentication and scheduling.</p>
+                    <a href="https://github.com/Vivora-Solutions" target="_blank" className="text-blue-600 text-sm hover:underline font-medium">View Source →</a>
+                  </div>
+                  <div className="bg-gray-50 p-4 border border-gray-200 rounded hover:border-[#E95420]/30 transition-colors">
+                    <h3 className="font-bold text-lg text-gray-900">Healthcare Management Microservices</h3>
+                    <p className="text-xs text-[#E95420] font-mono mb-2 bg-[#E95420]/10 inline-block px-2 py-1 rounded mt-1">Spring Boot • Angular • Hyperledger Fabric</p>
+                    <p className="text-gray-700 text-sm mb-3">Decentralized health records platform utilizing structural blockchain integrity paired with AI diagnosis models and WebRTC live streaming.</p>
+                    <a href="https://github.com/DaminduDeSilva/Healthcare-Appointment-and-Management-System.git" target="_blank" className="text-blue-600 text-sm hover:underline font-medium">View Source →</a>
+                  </div>
+                  <div className="bg-gray-50 p-4 border border-gray-200 rounded hover:border-[#E95420]/30 transition-colors">
+                    <h3 className="font-bold text-lg text-gray-900">Supply Chain Management Platform</h3>
+                    <p className="text-xs text-[#E95420] font-mono mb-2 bg-[#E95420]/10 inline-block px-2 py-1 rounded mt-1">React.js • Node.js • MySQL</p>
+                    <p className="text-gray-700 text-sm mb-3">End-to-end global logistics dashboard capable of orchestrating complex railway and trucking transit operations simultaneously from one hub.</p>
+                    <a href="https://github.com/DaminduDeSilva/Supply-Chain-Management-System" target="_blank" className="text-blue-600 text-sm hover:underline font-medium">View Source →</a>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
+      case 6: // ACHIEVEMENTS
         return (
           <div className="text-gray-800">
-            <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Achievements</h2>
-            <div className="bg-gray-50 p-5 border border-gray-200 rounded space-y-3 shadow-inner">
+            <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Awards & Achievements</h2>
+            <div className="bg-gray-50 p-4 border border-gray-200 rounded space-y-3 shadow-inner">
               <div className="flex items-start">
-                <FiCheckCircle className="text-green-500 mt-1 shrink-0 mr-3" />
-                <p className="text-gray-700"><b>A/L District Rank 40</b> & Island Rank 500+ (Physical Science Stream)</p>
+                <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
+                <p className="text-gray-800"><b>Cybershield 4.0 Finalist</b> – 2025, organized by SLIIT</p>
               </div>
               <div className="flex items-start">
-                <FiCheckCircle className="text-green-500 mt-1 shrink-0 mr-3" />
-                <p className="text-gray-700">Selection into the prestigious <b>University of Moratuwa</b> CSE program</p>
+                <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
+                <p className="text-gray-800"><b>CryptX Finalist</b> – 2025, University of Sri Jayawardhanapura</p>
               </div>
               <div className="flex items-start">
-                <FiCheckCircle className="text-green-500 mt-1 shrink-0 mr-3" />
-                <p className="text-gray-700">Active participant in university-level Hackathons and CTF (Capture The Flag) challenges.</p>
+                <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
+                <p className="text-gray-800"><b>Devthon 3.0 2nd Runners Up</b> – University of Moratuwa 2026</p>
+              </div>
+              <div className="flex items-start">
+                <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
+                <p className="text-gray-800"><b>Gencipher 1st Runner Up</b> – UCSC 2026</p>
+              </div>
+              <div className="flex items-start">
+                <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
+                <p className="text-gray-800"><b>CircraCTF 1st Runner Up</b> – Cicra Campus 2025</p>
+              </div>
+              
+              <div className="mt-4 pt-4 border-t border-gray-300">
+                <h3 className="font-bold text-lg mb-2 text-gray-800">Certifications</h3>
+                <p className="text-gray-700 text-sm flex items-center"><span className="text-[#E95420] font-bold mr-2">•</span>Linux Command Line: From Zero to Hero (Udemy)</p>
+                <p className="text-gray-700 text-sm flex items-center mt-1"><span className="text-[#E95420] font-bold mr-2">•</span>Metasploit from Scratch: Beginner to Professional (Udemy)</p>
               </div>
             </div>
           </div>

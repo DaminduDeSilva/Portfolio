@@ -20,7 +20,7 @@ export default function DesktopIcons() {
     },
     {
       id: "about_me",
-      label: "about_me.deb",
+      label: "About_me.deb",
       icon: <FiPackage size={34} className="text-[#E95420]" />,
       x: 20,
       y: 120,
@@ -42,8 +42,8 @@ export default function DesktopIcons() {
           drag
           dragConstraints={constraintsRef}
           dragMomentum={false}
-          initial={{ x: icon.x, y: icon.y }}
-          className="absolute flex flex-col items-center justify-center w-24 h-24 rounded-md hover:bg-white/10 cursor-pointer transition-colors active:cursor-grabbing group select-none"
+          style={{ top: icon.y, left: icon.x }}
+          className="absolute flex flex-col items-center justify-center w-24 h-24 rounded-lg hover:bg-white/10 cursor-pointer transition-colors active:cursor-grabbing group select-none"
           onDoubleClick={() => {
             if (icon.id === "about_me") openWindow("about");
             if (icon.id === "resume") openWindow("contact");

@@ -3,14 +3,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useWindowContext, AppId } from "@/contexts/WindowContext";
 import { useSystemContext } from "@/contexts/SystemContext";
-import { FiWifi, FiBattery, FiVolume2, FiUser, FiPackage } from "react-icons/fi";
+import {
+  FiWifi,
+  FiBattery,
+  FiVolume2,
+  FiUser,
+  FiPackage,
+} from "react-icons/fi";
 import { FaEnvelope, FaTerminal, FaUserCircle, FaUbuntu } from "react-icons/fa";
 import { BsFolder2Open, BsCpu, BsSearch } from "react-icons/bs";
 import { clsx } from "clsx";
 
 const apps: { id: AppId; icon: React.ReactElement; label: string }[] = [
   { id: "terminal", icon: <FaTerminal size={15} />, label: "Terminal" },
-  { id: "about", icon: <FiPackage size={15} />, label: "about_me.deb" },
+  { id: "about", icon: <FiPackage size={15} />, label: "About_me.deb" },
   { id: "projects", icon: <BsFolder2Open size={15} />, label: "Files" },
   { id: "skills", icon: <BsCpu size={15} />, label: "Tech Stack" },
   { id: "contact", icon: <FaEnvelope size={15} />, label: "Contact" },
@@ -58,10 +64,8 @@ export default function Taskbar() {
   return (
     <>
       <div className="h-14 w-full bg-[#2c001e]/85 backdrop-blur-xl border-t border-[#E95420]/25 flex flex-row items-center px-4 z-50 text-white relative select-none">
-        
         {/* Left side: empty so we can properly center the middle section */}
-        <div className="flex-[1] flex items-center justify-start">
-        </div>
+        <div className="flex-[1] flex items-center justify-start"></div>
 
         {/* Middle: centered app icons with Ubuntu Menu Launcher at the start */}
         <div className="flex-[2] flex items-center justify-center space-x-2">

@@ -37,7 +37,7 @@ const defaultWindows: Record<AppId, WindowData> = {
   },
   about: {
     id: "about",
-    title: "about_me.deb Installation",
+    title: "About_me.deb Installation",
     isOpen: true,
     isMinimized: false,
     zIndex: 20,

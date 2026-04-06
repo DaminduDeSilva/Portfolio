@@ -31,20 +31,41 @@ export default function Window({
   const [mounted, setMounted] = useState(false);
   const [initPos, setInitPos] = useState({ x: 100, y: 100 });
   const sizeRef = useRef<{ width: string; height: string } | null>(null);
+  const [windowDimensions, setWindowDimensions] = useState({ width: 1000, height: 800 });
 
   useEffect(() => {
-    if (!mounted) {
-      if (!defaultPosition) {
-        // Calculate center of screen
-        const x = Math.max(50, (window.innerWidth - defaultSize.width) / 2);
-        const y = Math.max(50, (window.innerHeight - defaultSize.height) / 2);
-        setInitPos({ x, y });
-      } else {
-        setInitPos(defaultPosition);
+    if (typeof window !== "undefined") {
+      setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
+
+      const handleResize = () => {
+        setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
+        // Auto-maximize on small screens
+        if (window.innerWidth <= 768 && !isMaximized) {
+          setIsMaximized(true);
+        }
+      };
+
+      if (!mounted) {
+        if (!defaultPosition) {
+          // Calculate center of screen, clamp to 0 if screen is smaller than default size
+          const x = Math.max(0, (window.innerWidth - defaultSize.width) / 2);
+          const y = Math.max(0, (window.innerHeight - defaultSize.height) / 2);
+          setInitPos({ x, y });
+        } else {
+          setInitPos(defaultPosition);
+        }
+        
+        // Auto-maximize on mobile immediately
+        if (window.innerWidth <= 768) {
+          setIsMaximized(true);
+        }
+        setMounted(true);
       }
-      setMounted(true);
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     }
-  }, [defaultPosition, defaultSize, mounted]);
+  }, [defaultPosition, defaultSize, mounted, isMaximized]);
 
   useEffect(() => {
     if (!windowRef.current) return;
@@ -56,11 +77,12 @@ export default function Window({
         windowRef.current.style.width = sizeRef.current.width;
         windowRef.current.style.height = sizeRef.current.height;
       } else {
-        windowRef.current.style.width = `${defaultSize.width}px`;
-        windowRef.current.style.height = `${defaultSize.height}px`;
+        // Use min to prevent exceeding viewport
+        windowRef.current.style.width = `min(${defaultSize.width}px, 100vw)`;
+        windowRef.current.style.height = `min(${defaultSize.height}px, 100vh)`;
       }
     }
-  }, [isMaximized, windowData.isOpen, mounted]);
+  }, [isMaximized, windowData.isOpen, mounted, defaultSize]);
 
   const toggleMaximize = () => {
     if (!isMaximized && windowRef.current) {
@@ -116,12 +138,13 @@ export default function Window({
   return (
     <motion.div
       ref={windowRef}
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.95, x: 0, y: 0 }}
       animate={{
         opacity: windowData.isMinimized ? 0 : 1,
         scale: windowData.isMinimized ? 0.95 : 1,
         pointerEvents: windowData.isMinimized ? "none" : "auto",
-        ...(isMaximized && { x: -initPos.x, y: -initPos.y }),
+        x: isMaximized ? 0 : undefined,
+        y: isMaximized ? 0 : undefined,
       }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
@@ -132,8 +155,10 @@ export default function Window({
       onPointerDown={() => focusWindow(id)}
       style={{
         position: "absolute",
-        left: initPos.x,
-        top: initPos.y,
+        left: isMaximized ? 0 : initPos.x,
+        top: isMaximized ? 0 : initPos.y,
+        maxWidth: "100vw",
+        maxHeight: "100vh",
         zIndex: windowData.zIndex,
       }}
       className={clsx(

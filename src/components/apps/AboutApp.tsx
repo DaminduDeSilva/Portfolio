@@ -39,7 +39,7 @@ export default function AboutApp() {
     }
   }, [step]);
 
-  const handleNext = () => setStep((prev) => Math.min(prev + 1, 8));
+  const handleNext = () => setStep((prev) => prev >= 6 ? 7 : prev + 1);
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 1));
   const handleCancel = () => closeWindow("about");
 
@@ -119,28 +119,29 @@ export default function AboutApp() {
           </div>
         );
 
-      case 3: // EDUCATION
+            case 3: // EDUCATION
         return (
           <div className="text-gray-800">
             <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Education</h2>
             <div className="space-y-6">
               <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <p className="font-bold text-lg">BSc (Hons) in Computer Science & Engineering</p>
-                <p className="text-gray-600 font-medium">University of Moratuwa (2022 - Present)</p>
+                <p className="font-bold text-lg">BSc. Engineering (Hons) in Computer Science and Engineering</p>
+                <p className="text-gray-600 font-medium">University of Moratuwa (2023 - Present)</p>
                 <p className="text-[#E95420] font-bold mt-2 inline-block bg-[#fff3ef] px-2 py-0.5 rounded border border-[#ffd8cc]">
-                  Current GPA: 3.52 / 4.20
+                  Current GPA: 3.55 (3rd Year)
                 </p>
               </div>
               <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <p className="font-bold text-lg">G.C.E Advanced Level (Physical Science Stream)</p>
-                <p className="text-gray-600 font-medium">Bandaranayake College Gampaha (2020)</p>
-                <p className="text-gray-500 text-sm mt-1">3A's - Maths Stream | District Rank: 40 | Island Rank: 500+</p>
+                <p className="font-bold text-lg">G.C.E. Advanced Level Examination</p>
+                <p className="text-gray-600 font-medium">Maliyadeva College, Kurunegala (2021) [2022]</p>
+                <p className="text-gray-500 text-sm mt-1">Physical Science Stream - 3 As (Distinction)</p>
+                <p className="text-gray-500 text-sm mt-1 font-bold">Z-score: 2.3958 | Island Rank: 262</p>
               </div>
             </div>
           </div>
         );
 
-      case 4: // EXPERIENCE
+
         return (
           <div className="text-gray-800">
             <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Experience</h2>
@@ -163,31 +164,58 @@ export default function AboutApp() {
           </div>
         );
 
-      case 5: // PROJECTS
+            case 5: // PROJECTS
         return (
           <div className="text-gray-800">
-            <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Key Projects</h2>
+            <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Cyber Security Projects</h2>
+            <div className="space-y-4 mb-6">
+              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
+                <div className="flex justify-between items-start">
+                  <h3 className="font-bold text-lg">Web Domain Scanner & Service Discovery</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-2">Python • RustScan • Nmap • Gemini API</p>
+                <p className="text-gray-700 text-sm mb-2">Passive & active recon tool with AI LLM wordlist generation, CDN tracking, and API detection.</p>
+                <a href="https://github.com/DaminduDeSilva/web-domain-scanner" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/DaminduDeSilva/web-domain-scanner</a>
+              </div>
+              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
+                <h3 className="font-bold text-lg">Cryptographic CTF Challenge - Web App</h3>
+                <p className="text-sm text-gray-600 mb-2">Python (Flask) • AES • ECDSA</p>
+                <p className="text-gray-700 text-sm mb-2">Simulated challenge with AES-encrypted passwords & ECDSA private key recovery (nonce reuse).</p>
+                <a href="https://github.com/DaminduDeSilva/CTF-Challenge-Cryptography" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/DaminduDeSilva/CTF-Challenge-Cryptography</a>
+              </div>
+              <div className="bg-gray-50 p-4 border border-gray-200 rounded">
+                <h3 className="font-bold text-lg">Android App Security Analysis - InsecureBankv2</h3>
+                <p className="text-sm text-gray-600 mb-2">Burp Suite • JADX • APKTool</p>
+                <p className="text-gray-700 text-sm mb-2">OWASP Mobile security assessment finding insecure storage and weak auth.</p>
+                <a href="https://bit.ly/android-security-analysis" target="_blank" className="text-blue-600 text-sm hover:underline">View Report</a>
+              </div>
+            </div>
+
+            <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Full-Stack Projects</h2>
             <div className="space-y-4">
               <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <h3 className="font-bold text-lg">Ubuntu OS Portfolio</h3>
-                <p className="text-sm text-gray-600 mb-2">Next.js • TailwindCSS • React</p>
-                <p className="text-gray-700">A fully functional web-based desktop environment simulating Ubuntu Linux.</p>
+                <h3 className="font-bold text-lg">Salon Management SaaS Platform</h3>
+                <p className="text-sm text-gray-600 mb-2">Node.js • Supabase • React.js</p>
+                <p className="text-gray-700 text-sm mb-2">Complete platform connecting salons & customers with secure OAuth auth.</p>
+                <a href="https://github.com/Vivora-Solutions" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/Vivora-Solutions</a>
               </div>
               <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <h3 className="font-bold text-lg">CyberGuard AI</h3>
-                <p className="text-sm text-gray-600 mb-2">Python • TensorFlow • Scikit-Learn</p>
-                <p className="text-gray-700">A machine learning model designed to detect anomalies in network intrusion scenarios.</p>
+                <h3 className="font-bold text-lg">Healthcare Management Microservices</h3>
+                <p className="text-sm text-gray-600 mb-2">Spring Boot • Angular • Hyperledger Fabric</p>
+                <p className="text-gray-700 text-sm mb-2">Decentralized health records via blockchain, AI diagnosis, and WebRTC streaming.</p>
+                <a href="https://github.com/DaminduDeSilva/Healthcare-Appointment-and-Management-System" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/DaminduDeSilva/Healthcare-Appointment-and-Management-System</a>
               </div>
               <div className="bg-gray-50 p-4 border border-gray-200 rounded">
-                <h3 className="font-bold text-lg">DevFlow</h3>
-                <p className="text-sm text-gray-600 mb-2">Node.js • Express • MongoDB</p>
-                <p className="text-gray-700">A collaborative task management system specifically tailored for agile engineering teams.</p>
+                <h3 className="font-bold text-lg">Supply Chain Management Platform</h3>
+                <p className="text-sm text-gray-600 mb-2">React.js • Node.js • MySQL</p>
+                <p className="text-gray-700 text-sm mb-2">End-to-end logistics platform managing railway & truck transit operations.</p>
+                <a href="https://github.com/DaminduDeSilva/Supply-Chain-Management-System" target="_blank" className="text-blue-600 text-sm hover:underline">github.com/DaminduDeSilva/Supply-Chain-Management-System</a>
               </div>
             </div>
           </div>
         );
 
-      case 6: // ACHIEVEMENTS
+
         return (
           <div className="text-gray-800">
             <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Achievements</h2>

@@ -29,38 +29,47 @@ export default function Window({
 
   const [isMaximized, setIsMaximized] = useState(defaultMaximized);
   const [mounted, setMounted] = useState(false);
-  const [initPos, setInitPos] = useState({ x: 100, y: 100 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const sizeRef = useRef<{ width: string; height: string } | null>(null);
   const [windowDimensions, setWindowDimensions] = useState({ width: 1000, height: 800 });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
-
-      const handleResize = () => {
-        setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
-        // Auto-maximize on small screens
-        if (window.innerWidth <= 768 && !isMaximized) {
-          setIsMaximized(true);
-        }
+      const getInitialPos = () => {
+        if (defaultPosition) return defaultPosition;
+        const x = Math.max(0, (window.innerWidth - defaultSize.width) / 2);
+        const y = Math.max(0, (window.innerHeight - defaultSize.height) / 2);
+        return { x, y };
       };
 
       if (!mounted) {
-        if (!defaultPosition) {
-          // Calculate center of screen, clamp to 0 if screen is smaller than default size
-          const x = Math.max(0, (window.innerWidth - defaultSize.width) / 2);
-          const y = Math.max(0, (window.innerHeight - defaultSize.height) / 2);
-          setInitPos({ x, y });
-        } else {
-          setInitPos(defaultPosition);
-        }
-        
-        // Auto-maximize on mobile immediately
-        if (window.innerWidth <= 768) {
-          setIsMaximized(true);
-        }
+        setPosition(getInitialPos());
+        setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
+        if (window.innerWidth <= 768) setIsMaximized(true);
         setMounted(true);
       }
+
+      const handleResize = () => {
+        const newWidth = window.innerWidth;
+        const newHeight = window.innerHeight;
+        setWindowDimensions({ width: newWidth, height: newHeight });
+
+        // Auto-maximize on small screens
+        if (newWidth <= 768 && !isMaximized) {
+          setIsMaximized(true);
+        }
+
+        // Clamp position to new viewport
+        setPosition((prev) => {
+          const currentWidth = windowRef.current?.offsetWidth || defaultSize.width;
+          const currentHeight = windowRef.current?.offsetHeight || defaultSize.height;
+          
+          return {
+            x: Math.min(prev.x, Math.max(0, newWidth - currentWidth)),
+            y: Math.min(prev.y, Math.max(0, newHeight - currentHeight)),
+          };
+        });
+      };
 
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
@@ -152,11 +161,23 @@ export default function Window({
       dragListener={false}
       dragControls={dragControls}
       dragMomentum={false}
+      dragConstraints={{
+        left: 0,
+        top: 0,
+        right: windowDimensions.width - (windowRef.current?.offsetWidth || defaultSize.width),
+        bottom: windowDimensions.height - (windowRef.current?.offsetHeight || defaultSize.height),
+      }}
       onPointerDown={() => focusWindow(id)}
+      onDragEnd={(_, info) => {
+        setPosition({
+          x: position.x + info.offset.x,
+          y: position.y + info.offset.y,
+        });
+      }}
       style={{
         position: "absolute",
-        left: isMaximized ? 0 : initPos.x,
-        top: isMaximized ? 0 : initPos.y,
+        left: isMaximized ? 0 : position.x,
+        top: isMaximized ? 0 : position.y,
         maxWidth: "100vw",
         maxHeight: "100vh",
         zIndex: windowData.zIndex,

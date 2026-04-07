@@ -59,7 +59,7 @@ const defaultWindows: Record<AppId, WindowData> = {
   },
   skills: {
     id: "skills",
-    title: "Tech Stack",
+    title: "technologies.html — Technical Proficiency",
     isOpen: false,
     isMinimized: false,
     zIndex: 10,

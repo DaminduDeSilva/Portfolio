@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { useWindowContext } from "@/contexts/WindowContext";
 import { BsFiletypePdf } from "react-icons/bs";
-import { FiPackage, FiFolder } from "react-icons/fi";
+import { FiPackage, FiFolder, FiFileText } from "react-icons/fi";
 import { FcFolder } from "react-icons/fc";
 
 export default function DesktopIcons() {
@@ -27,11 +27,18 @@ export default function DesktopIcons() {
       y: 120,
     },
     {
+      id: "skills",
+      label: "technologies.html",
+      icon: <FiFileText size={40} className="text-[#E95420]" />,
+      x: 20,
+      y: 220,
+    },
+    {
       id: "projects",
       label: "Projects",
       icon: <FcFolder size={38} className="drop-shadow-sm" />,
       x: 20,
-      y: 220,
+      y: 320,
     },
   ];
 
@@ -49,6 +56,7 @@ export default function DesktopIcons() {
             if (icon.id === "about_me") openWindow("about");
             if (icon.id === "resume") openWindow("resume");
             if (icon.id === "projects") openWindow("projects");
+            if (icon.id === "skills") openWindow("skills");
           }}
         >
           <div className="text-white drop-shadow-md group-hover:scale-105 transition-transform">

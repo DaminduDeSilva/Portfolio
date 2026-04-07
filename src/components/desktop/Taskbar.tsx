@@ -9,6 +9,7 @@ import {
   FiVolume2,
   FiUser,
   FiPackage,
+  FiFileText,
 } from "react-icons/fi";
 import { FaEnvelope, FaTerminal, FaUserCircle, FaUbuntu } from "react-icons/fa";
 import { BsFolder2Open, BsCpu, BsSearch, BsFiletypePdf } from "react-icons/bs";
@@ -19,7 +20,7 @@ const apps: { id: AppId; icon: React.ReactElement; label: string }[] = [
   { id: "terminal", icon: <FaTerminal size={15} />, label: "Terminal" },
   { id: "about", icon: <FiPackage size={15} />, label: "About_me.deb" },
   { id: "projects", icon: <BsFolder2Open size={15} />, label: "Files" },
-  { id: "skills", icon: <BsCpu size={15} />, label: "Tech Stack" },
+  { id: "skills", icon: <FiFileText size={15} />, label: "technologies.html" },
   { id: "contact", icon: <FaEnvelope size={15} />, label: "Contact" },
 ];
 
@@ -133,6 +134,7 @@ export default function Taskbar() {
         {/* Right side: System Tray */}
         <div className="flex-[1] flex items-center justify-end space-x-2 pr-2">
           <div
+            onClick={() => setShowMenu(!showMenu)}
             className="w-10 h-10 flex items-center justify-center rounded-md hover:bg-white/10 cursor-pointer text-gray-200 transition-colors"
             title="Search"
           >
@@ -157,9 +159,12 @@ export default function Taskbar() {
         >
           <div className="w-full h-11 bg-black/25 rounded-md border border-[#E95420]/25 flex items-center px-4 mb-6 shadow-inner">
             <BsSearch size={14} className="text-gray-400 mr-2" />
-            <span className="text-sm text-gray-400">
-              Search apps, settings, files
-            </span>
+            <input
+              autoFocus
+              type="text"
+              placeholder="Search apps, settings, files..."
+              className="bg-transparent border-none outline-none text-sm text-gray-200 w-full placeholder:text-gray-400"
+            />
           </div>
 
           <h3 className="text-sm font-semibold mb-4 px-2 text-gray-100">

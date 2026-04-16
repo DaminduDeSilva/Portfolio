@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Window from "../desktop/Window";
+import { useWindowContext } from "@/contexts/WindowContext";
 import {
   FiFolder,
   FiFileText,
@@ -32,10 +33,17 @@ interface FileNode {
 
 const VFS: Record<string, FileNode[]> = {
   "/": [
+    { type: "folder", name: "Desktop", path: "/Desktop", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
     { type: "folder", name: "Projects", path: "/Projects", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
     { type: "folder", name: "Documents", path: "/Documents", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
     { type: "folder", name: "Downloads", path: "/Downloads", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
     { type: "file", name: "README.md", path: "/", content: "# System Navigator\n\nWelcome to my professional workspace navigation engine.\n\nYou can explore my work history, technical projects, and certifications through this file system.", size: "1 KB", date: "Today", icon: <FcDocument size={44} className="drop-shadow mb-2" /> },
+  ],
+  "/Desktop": [
+    { type: "folder", name: "Achievements", path: "/Desktop/Achievements", icon: <FcApproval size={44} className="drop-shadow mb-2" /> },
+    { type: "file", name: "About_me.deb", path: "/Desktop", content: "### Ubuntu Package: About Me\n\nThis is a simulated installer for my professional profile app.", size: "450 KB", date: "Recent", icon: <FiPackage size={44} className="text-[#E95420] mb-2" /> },
+    { type: "file", name: "technologies.html", path: "/Desktop", content: "### Tech Stack Config\n\nA JSON configuration file containing my full technology stack proficiency.", size: "12 KB", date: "Recent", icon: <FiFileText size={44} className="text-cyan-500 mb-2" /> },
+    { type: "folder", name: "Projects", path: "/Projects", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
   ],
   "/Documents": [
     { type: "file", name: "Resume_2025.pdf", path: "/Documents", content: "### Damindu De Silva - Senior Penetration Tester\n\nExpert in offensive security, vulnerability research, and full-stack development.\n\n[Official PDF Available]", link: "/resume.pdf", size: "1.2 MB", date: "Today", icon: <BsFiletypePdf size={44} className="text-red-500 mb-2" /> },
@@ -45,7 +53,7 @@ const VFS: Record<string, FileNode[]> = {
     { type: "folder", name: "Cyber_Security", path: "/Projects/Cyber_Security" },
     { type: "folder", name: "DevOps_Cloud", path: "/Projects/DevOps_Cloud" },
     { type: "folder", name: "Full_Stack", path: "/Projects/Full_Stack" },
-    { type: "folder", name: "Achievements", path: "/Projects/Achievements" },
+    
   ],
   "/Projects/Cyber_Security": [
     { type: "file", name: "Web_Domain_Scanner.md", path: "/Projects/Cyber_Security", content: "### Web Domain Scanner & Service Discovery\n\nPassive & active recon tool with AI LLM wordlist generation, CDN tracking, and API detection.\n\n**Technologies:** Python • RustScan • Nmap • Gemini API", link: "https://github.com/DaminduDeSilva/web-domain-scanner.git", size: "45 KB", date: "2025" },
@@ -61,12 +69,12 @@ const VFS: Record<string, FileNode[]> = {
     { type: "file", name: "Healthcare_Microservices.java", path: "/Projects/Full_Stack", content: "### Healthcare Management Microservices\n\nDecentralized health records platform utilizing structural blockchain integrity paired with AI diagnosis models and WebRTC live streaming.\n\n**Technologies:** Spring Boot • Angular • Hyperledger Fabric", link: "https://github.com/DaminduDeSilva/Healthcare-Appointment-and-Management-System.git", size: "850 KB", date: "2025" },
     { type: "file", name: "Supply_Chain_Platform.js", path: "/Projects/Full_Stack", content: "### Supply Chain Management Platform\n\nEnd-to-end global logistics dashboard capable of orchestrating complex railway and trucking transit operations simultaneously from one hub.\n\n**Technologies:** React.js • Node.js • MySQL", link: "https://github.com/DaminduDeSilva/Supply-Chain-Management-System", size: "410 KB", date: "2026" },
   ],
-  "/Projects/Achievements": [
-    { type: "file", name: "Cybershield_4.0_Finalist.png", path: "/Projects/Achievements", content: "### Cybershield 4.0 Finalist\n\nOrganized by SLIIT\nYear: 2025", link: "", size: "2 MB", date: "2025" },
-    { type: "file", name: "CryptX_Finalist.png", path: "/Projects/Achievements", content: "### CryptX Finalist\n\nOrganized by University of Sri Jayawardhanapura\nYear: 2025", link: "", size: "1.8 MB", date: "2025" },
-    { type: "file", name: "Devthon_3.0_Runner_Up.png", path: "/Projects/Achievements", content: "### Devthon 3.0 2nd Runners Up\n\nOrganized by University of Moratuwa\nYear: 2026", link: "", size: "1.5 MB", date: "2026" },
-    { type: "file", name: "Gencipher_Runner_Up.png", path: "/Projects/Achievements", content: "### Gencipher 1st Runner Up\n\nOrganized by UCSC\nYear: 2026", link: "", size: "2.1 MB", date: "2026" },
-    { type: "file", name: "CircraCTF_Runner_Up.png", path: "/Projects/Achievements", content: "### CircraCTF 1st Runner Up\n\nOrganized by Cicra Campus\nYear: 2025", link: "", size: "1.9 MB", date: "2025" },
+  "/Desktop/Achievements": [
+    { type: "file", name: "Cybershield_4.0_Finalist.png", path: "/Desktop/Achievements", content: "### Cybershield 4.0 Finalist\n\nOrganized by SLIIT\nYear: 2025", link: "/certificates/cybershield.png", size: "701 KB", date: "2025" },
+    { type: "file", name: "CryptX_Finalist.jpg", path: "/Desktop/Achievements", content: "### CryptX Finalist\n\nOrganized by University of Sri Jayawardhanapura\nYear: 2025", link: "/certificates/cypher.jpg", size: "326 KB", date: "2025" },
+    { type: "file", name: "Devthon_3.0_Runner_Up.jpg", path: "/Desktop/Achievements", content: "### Devthon 3.0 2nd Runners Up\n\nOrganized by University of Moratuwa\nYear: 2026", link: "/certificates/devthon.jpg", size: "281 KB", date: "2026" },
+    { type: "file", name: "Gencipher_Runner_Up.jpg", path: "/Desktop/Achievements", content: "### Gencipher 1st Runner Up\n\nOrganized by UCSC\nYear: 2026", link: "/certificates/genzipher.jpg", size: "175 KB", date: "2026" },
+    { type: "file", name: "CircraCTF_Runner_Up.jpg", path: "/Desktop/Achievements", content: "### CircraCTF 1st Runner Up\n\nOrganized by Cicra Campus\nYear: 2025", link: "/certificates/cicra.jpg", size: "301 KB", date: "2025" },
   ],
   "/Downloads": [
     { type: "file", name: "About_me.deb", path: "/Downloads", content: "### Ubuntu Package: About Me\n\nThis is a simulated installer for my professional profile app.", size: "450 KB", date: "Recent", icon: <FiPackage size={44} className="text-[#E95420] mb-2" /> },
@@ -75,10 +83,22 @@ const VFS: Record<string, FileNode[]> = {
 };
 
 export default function FileExplorerApp() {
+  const { windows } = useWindowContext();
   const [currentPath, setCurrentPath] = useState<string>("/");
   const [selectedFile, setSelectedFile] = useState<FileNode | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [recentFiles, setRecentFiles] = useState<FileNode[]>([]);
+
+  // Sync with window params for deep-linking (e.g. from Desktop shortcuts)
+  useEffect(() => {
+    const params = windows["projects"]?.params;
+    if (params?.initialPath) {
+      setCurrentPath(params.initialPath);
+      setSelectedFile(null);
+      // We don't delete from the context directly here to avoid mutation issues,
+      // the openWindow call handles the update.
+    }
+  }, [windows["projects"]?.params]);
 
   const handleItemClick = (item: FileNode) => {
     if (item.type === "folder") {
@@ -111,25 +131,43 @@ export default function FileExplorerApp() {
       <div className="bg-[#f3f6fb] h-full w-full flex text-[#1f2937] font-sans">
 
         {/* Sidebar */}
-        <div className="hidden md:flex w-52 bg-[#eef2f9] border-r border-[#d5ddeb] py-4 flex-col">
+        <aside className="hidden md:flex w-52 bg-[#eef2f9] border-r border-[#d5ddeb] py-4 flex-col">
           <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
             Quick Access
           </div>
           <ul className="space-y-1">
             <li
-              className={`px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 cursor-pointer ${currentPath === "/" ? "bg-[#E95420] text-white shadow-sm" : "text-slate-700 hover:bg-white"}`}
+              className={clsx(
+                "px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 cursor-pointer transition-all",
+                currentPath === "/" ? "bg-[#E95420] text-white shadow-sm" : "text-slate-700 hover:bg-white"
+              )}
               onClick={() => { setCurrentPath("/"); setSelectedFile(null); }}
             >
               <FiHome /> <span>Home</span>
             </li>
             <li
-              className={`px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 cursor-pointer ${currentPath === "/Documents" ? "bg-[#E95420] text-white shadow-sm" : "text-slate-700 hover:bg-white"}`}
+              className={clsx(
+                "px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 cursor-pointer transition-all",
+                currentPath === "/Desktop" ? "bg-[#E95420] text-white shadow-sm" : "text-slate-700 hover:bg-white"
+              )}
+              onClick={() => { setCurrentPath("/Desktop"); setSelectedFile(null); }}
+            >
+              <FiFolder /> <span>Desktop</span>
+            </li>
+            <li
+              className={clsx(
+                "px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 cursor-pointer transition-all",
+                currentPath === "/Documents" ? "bg-[#E95420] text-white shadow-sm" : "text-slate-700 hover:bg-white"
+              )}
               onClick={() => { setCurrentPath("/Documents"); setSelectedFile(null); }}
             >
               <FiHardDrive /> <span>Documents</span>
             </li>
             <li
-              className={`px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 cursor-pointer ${currentPath === "recent" ? "bg-[#E95420] text-white shadow-sm" : "text-slate-700 hover:bg-white"}`}
+              className={clsx(
+                "px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 cursor-pointer transition-all",
+                currentPath === "recent" ? "bg-[#E95420] text-white shadow-sm" : "text-slate-700 hover:bg-white"
+              )}
               onClick={() => { setCurrentPath("recent"); setSelectedFile(null); }}
             >
               <FiClock /> <span>Recent</span>
@@ -140,33 +178,33 @@ export default function FileExplorerApp() {
             Internal Systems
           </div>
           <ul className="space-y-1">
-            <li className="px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 text-slate-700 hover:bg-white cursor-pointer" onClick={() => setCurrentPath("/Projects/Cyber_Security")}>
+            <li className="px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 text-slate-700 hover:bg-white cursor-pointer transition-all" onClick={() => setCurrentPath("/Projects/Cyber_Security")}>
               <FiChevronRight className="text-slate-400" /> <span>Security Hub</span>
             </li>
-            <li className="px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 text-slate-700 hover:bg-white cursor-pointer" onClick={() => setCurrentPath("/Downloads")}>
+            <li className="px-4 py-2 mx-2 rounded-lg flex items-center space-x-3 text-slate-700 hover:bg-white cursor-pointer transition-all" onClick={() => setCurrentPath("/Downloads")}>
               <FiChevronRight className="text-slate-400" /> <span>Binaries</span>
             </li>
           </ul>
-        </div>
+        </aside>
 
         {/* Main Area */}
-        <div className="flex-1 flex flex-col min-w-0">
+        <main className="flex-1 flex flex-col min-w-0">
 
           {/* Toolbar */}
-          <div className="h-12 bg-white flex items-center px-4 border-b border-[#d5ddeb] space-x-2 shrink-0">
-            <div className="flex items-center space-x-1">
+          <header className="h-12 bg-white flex items-center px-4 border-b border-[#d5ddeb] space-x-2 shrink-0">
+            <nav className="flex items-center space-x-1">
               {getBreadcrumbs().map((crumb, idx, arr) => (
                 <React.Fragment key={idx}>
-                  <div
+                  <button
                     className={clsx(
-                      "p-1.5 rounded cursor-pointer transition-colors text-sm",
+                      "p-1.5 rounded cursor-pointer transition-colors text-sm outline-none",
                       idx === arr.length - 1 ? "text-slate-900 font-bold" : "text-slate-500 hover:bg-slate-100"
                     )}
                     onClick={() => {
                       if (crumb === "Home") setCurrentPath("/");
                       else if (crumb === "Recent") setCurrentPath("recent");
                       else {
-                        // Reconstruct path for earlier chunks
+                        // Reconstruct path for deeper folders
                         const targetPath = "/" + arr.slice(1, idx + 1).join("/");
                         setCurrentPath(targetPath);
                       }
@@ -174,11 +212,11 @@ export default function FileExplorerApp() {
                     }}
                   >
                     {crumb.replace(/_/g, " ")}
-                  </div>
+                  </button>
                   {idx < arr.length - 1 && <FiChevronRight className="text-slate-400 text-xs shrink-0" />}
                 </React.Fragment>
               ))}
-            </div>
+            </nav>
 
             <div className="ml-auto w-48 lg:w-64 h-8 rounded-md border border-[#d7deea] bg-[#f8fbff] flex items-center px-2 text-gray-900 text-sm hidden sm:flex">
               <FiSearch className="mr-2 text-slate-400" />
@@ -190,15 +228,15 @@ export default function FileExplorerApp() {
                 className="bg-transparent border-none outline-none w-full placeholder:text-slate-400"
               />
             </div>
-          </div>
+          </header>
 
-          <div className="flex-1 flex overflow-hidden">
+          <section className="flex-1 flex overflow-hidden">
             <div className="flex-1 p-4 overflow-y-auto bg-[#f8fbff]">
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {filteredFiles.map((item, idx) => {
                   const isSelected = selectedFile?.name === item.name;
                   return (
-                    <div
+                    <article
                       key={idx}
                       className={clsx(
                         "flex flex-col items-center justify-start p-4 rounded-xl cursor-pointer group transition-all border outline-none",
@@ -224,7 +262,7 @@ export default function FileExplorerApp() {
                       )}>
                         {item.name.replace(/_/g, " ")}
                       </span>
-                    </div>
+                    </article>
                   );
                 })}
               </div>
@@ -238,7 +276,7 @@ export default function FileExplorerApp() {
             </div>
 
             {selectedFile && (
-              <div className="w-80 bg-white border-l border-[#d5ddeb] flex flex-col animate-in slide-in-from-right-8 duration-300">
+              <aside className="w-80 bg-white border-l border-[#d5ddeb] flex flex-col animate-in slide-in-from-right-8 duration-300">
                 <div className="h-12 border-b border-[#d5ddeb] flex items-center justify-between px-4 bg-slate-50/50">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Metadata</span>
                   <button onClick={() => setSelectedFile(null)} className="text-slate-400 hover:text-red-500 rounded-full p-1.5 transition-colors">
@@ -276,11 +314,10 @@ export default function FileExplorerApp() {
                     </a>
                   )}
                 </div>
-              </div>
+              </aside>
             )}
-
-          </div>
-        </div>
+          </section>
+        </main>
       </div>
     </Window>
   );

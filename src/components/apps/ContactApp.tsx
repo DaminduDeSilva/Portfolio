@@ -9,7 +9,7 @@ export default function ContactApp() {
     <Window id="contact" defaultSize={{ width: 900, height: 650 }}>
       {/* Clean UI Container */}
       <div className="bg-white h-full w-full flex flex-col items-center justify-center p-8 text-gray-800 relative overflow-hidden">
-        
+
         {/* Soft Background glow representing Ubuntu/light styling */}
         <div className="absolute top-[-50%] right-[-20%] w-96 h-96 bg-[#E95420]/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute bottom-[-30%] left-[-10%] w-64 h-64 bg-[#77216F]/10 rounded-full blur-[80px] pointer-events-none" />
@@ -52,7 +52,7 @@ export default function ContactApp() {
 
           {/* LinkedIn (Placeholder) */}
           <a
-            href="https://linkedin.com/in/damindu-de-silva"
+            href="https://www.linkedin.com/in/damindu-de-silva-3110142b1/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center p-4 bg-gray-50 border border-gray-200 rounded-xl hover:border-[#E95420]/50 hover:bg-[#fff3ef] transition-all group shrink-0 shadow-sm"

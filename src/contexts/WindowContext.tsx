@@ -17,11 +17,12 @@ export interface WindowData {
   isOpen: boolean;
   isMinimized: boolean;
   zIndex: number;
+  params?: any;
 }
 
 interface WindowContextType {
   windows: Record<AppId, WindowData>;
-  openWindow: (id: AppId) => void;
+  openWindow: (id: AppId, params?: any) => void;
   closeWindow: (id: AppId) => void;
   minimizeWindow: (id: AppId) => void;
   focusWindow: (id: AppId) => void;
@@ -100,12 +101,18 @@ export function WindowProvider({ children }: { children: ReactNode }) {
     setFocusedWindow(id);
   };
 
-  const openWindow = (id: AppId) => {
+  const openWindow = (id: AppId, params?: any) => {
     setZIndexCounter((prevZ) => {
       const nextZ = prevZ + 1;
       setWindows((prev) => ({
         ...prev,
-        [id]: { ...prev[id], isOpen: true, isMinimized: false, zIndex: nextZ },
+        [id]: {
+          ...prev[id],
+          isOpen: true,
+          isMinimized: false,
+          zIndex: nextZ,
+          params: params !== undefined ? params : prev[id].params,
+        },
       }));
       return nextZ;
     });

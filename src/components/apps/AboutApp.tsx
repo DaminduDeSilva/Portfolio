@@ -63,27 +63,33 @@ export default function AboutApp() {
           <h1 className="text-2xl font-bold font-ubuntu">About_me.deb</h1>
         </div>
 
-        <ul className="space-y-5">
-          {steps.map((label, i) => {
-            const num = i + 1;
-            return (
-              <li key={num} className="flex items-center">
-                <div
-                  className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                    step === num
-                      ? "bg-[#E95420]"
-                      : step > num
-                        ? "bg-green-500"
-                        : "bg-white/20"
-                  }`}
-                >
-                  {step > num ? "✓" : num}
-                </div>
-                <span className="ml-3 text-sm">{label}</span>
-              </li>
-            );
-          })}
-        </ul>
+         <ul className="space-y-5">
+           {steps.map((label, i) => {
+             const num = i + 1;
+             const isActive = step === num;
+             return (
+               <li
+                 key={num}
+                 className={`flex items-center cursor-pointer group transition-all p-2 -mx-2 rounded-lg ${isActive ? "bg-white/10" : "hover:bg-white/5"}`}
+                 onClick={() => setStep(num)}
+               >
+                 <div
+                   className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all ${isActive
+                       ? "bg-[#E95420] scale-110 shadow-lg shadow-[#E95420]/30"
+                       : step > num
+                         ? "bg-green-500"
+                         : "bg-white/20 group-hover:bg-white/30"
+                     }`}
+                 >
+                   {step > num ? "✓" : num}
+                 </div>
+                 <span className={`ml-3 text-sm transition-colors ${isActive ? "text-white font-bold" : "text-white/70 group-hover:text-white"}`}>
+                   {label}
+                 </span>
+               </li>
+             );
+           })}
+         </ul>
       </div>
     </div>
   );
@@ -156,7 +162,7 @@ export default function AboutApp() {
                 </ul>
               </div>
             </div>
-            
+
             <h2 className="text-2xl font-bold mt-6 mb-4 text-[#E95420]">Volunteering</h2>
             <div className="space-y-4">
               <div className="bg-gray-50 p-3 border border-gray-200 rounded">
@@ -179,22 +185,22 @@ export default function AboutApp() {
         return (
           <div className="text-gray-800 flex flex-col h-full bg-white">
             <h2 className="text-2xl font-bold mb-4 text-[#E95420] shrink-0">Projects Portfolio</h2>
-            
+
             {/* Tabs */}
             <div className="flex border-b border-gray-200 mb-4 shrink-0 overflow-x-auto">
-              <button 
+              <button
                 onClick={() => setProjectTab('cyber')}
                 className={`py-2 px-4 font-medium text-sm border-b-2 transition-colors whitespace-nowrap ${projectTab === 'cyber' ? 'border-[#E95420] text-[#E95420]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
               >
                 Cyber Security
               </button>
-              <button 
+              <button
                 onClick={() => setProjectTab('devops')}
                 className={`py-2 px-4 font-medium text-sm border-b-2 transition-colors whitespace-nowrap ${projectTab === 'devops' ? 'border-[#E95420] text-[#E95420]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
               >
                 DevOps & Cloud
               </button>
-              <button 
+              <button
                 onClick={() => setProjectTab('fullstack')}
                 className={`py-2 px-4 font-medium text-sm border-b-2 transition-colors whitespace-nowrap ${projectTab === 'fullstack' ? 'border-[#E95420] text-[#E95420]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
               >
@@ -283,21 +289,21 @@ export default function AboutApp() {
               </div>
               <div className="flex items-start">
                 <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
-                <p className="text-gray-800"><b>CryptX Finalist</b> – 2025, University of Sri Jayawardhanapura</p>
+                <p className="text-gray-800"><b>CryptX Finalist</b> – 2025, organized by ICTS-USJ</p>
               </div>
               <div className="flex items-start">
                 <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
-                <p className="text-gray-800"><b>Devthon 3.0 2nd Runners Up</b> – University of Moratuwa 2026</p>
+                <p className="text-gray-800"><b>Devthon 3.0 2nd Runners Up</b> –2026, organized by University of Moratuwa</p>
               </div>
               <div className="flex items-start">
                 <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
-                <p className="text-gray-800"><b>Gencipher 1st Runner Up</b> – UCSC 2026</p>
+                <p className="text-gray-800"><b>Gencipher 1st Runner Up</b> –2026, organized by UCSC</p>
               </div>
               <div className="flex items-start">
                 <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
-                <p className="text-gray-800"><b>CircraCTF 1st Runner Up</b> – Cicra Campus 2025</p>
+                <p className="text-gray-800"><b>CircraCTF 1st Runner Up</b> –2025, organized by Cicra Campus</p>
               </div>
-              
+
               <div className="mt-4 pt-4 border-t border-gray-300">
                 <h3 className="font-bold text-lg mb-2 text-gray-800">Certifications</h3>
                 <p className="text-gray-700 text-sm flex items-center"><span className="text-[#E95420] font-bold mr-2">•</span>Linux Command Line: From Zero to Hero (Udemy)</p>
@@ -356,7 +362,7 @@ export default function AboutApp() {
 
           <div className="mt-6 flex justify-end space-x-3 shrink-0">
             {step > 1 && step < 7 && (
-              <button onClick={handleBack} className="px-4 py-2 bg-gray-200">
+              <button onClick={handleBack} className="px-4 py-2 bg-gray-400">
                 Back
               </button>
             )}

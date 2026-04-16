@@ -50,24 +50,27 @@ export default function Window({
       }
 
       const handleResize = () => {
-        const newWidth = window.innerWidth;
-        const newHeight = window.innerHeight;
-        setWindowDimensions({ width: newWidth, height: newHeight });
+        requestAnimationFrame(() => {
+          const newWidth = window.innerWidth;
+          const newHeight = window.innerHeight;
+          setWindowDimensions({ width: newWidth, height: newHeight });
 
-        // Auto-maximize on small screens
-        if (newWidth <= 768 && !isMaximized) {
-          setIsMaximized(true);
-        }
+          // Auto-maximize on small screens
+          if (newWidth <= 768 && !isMaximized) {
+            setIsMaximized(true);
+          }
 
-        // Clamp position to new viewport
-        setPosition((prev) => {
-          const currentWidth = windowRef.current?.offsetWidth || defaultSize.width;
-          const currentHeight = windowRef.current?.offsetHeight || defaultSize.height;
-          
-          return {
-            x: Math.min(prev.x, Math.max(0, newWidth - currentWidth)),
-            y: Math.min(prev.y, Math.max(0, newHeight - currentHeight)),
-          };
+          // Clamp position to new viewport
+          setPosition((prev) => {
+            if (!windowRef.current) return prev;
+            const currentWidth = windowRef.current.offsetWidth || defaultSize.width;
+            const currentHeight = windowRef.current.offsetHeight || defaultSize.height;
+
+            return {
+              x: Math.min(prev.x, Math.max(0, newWidth - currentWidth)),
+              y: Math.min(prev.y, Math.max(0, newHeight - currentHeight)),
+            };
+          });
         });
       };
 

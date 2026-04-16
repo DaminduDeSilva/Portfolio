@@ -244,7 +244,8 @@ const VFS: Record<string, FileNode[]> = {
       type: "file",
       name: "Cybershield_4.0_Finalist.png",
       path: "/Desktop/Achievements",
-      content: "### Cybershield 4.0 Finalist\n\nOrganized by IEEE Computer Society of SLIIT in collaboration with Hashx\nYear: 2025",
+      content:
+        "### Cybershield 4.0 Finalist\n\nOrganized by IEEE Computer Society of SLIIT in collaboration with Hashx\nYear: 2025",
       link: "/certificates/cybershield.png",
       size: "701 KB",
       date: "2025",
@@ -263,7 +264,8 @@ const VFS: Record<string, FileNode[]> = {
       type: "file",
       name: "Cypher_3.0.jpg",
       path: "/Desktop/Achievements",
-      content: "### Cypher 3.0 - Inside a Hacker's Mind\n\nOrganized by IEEE Student Branch of KDU\nYear: 2025",
+      content:
+        "### Cypher 3.0 - Inside a Hacker's Mind\n\nOrganized by IEEE Student Branch of KDU\nYear: 2025",
       link: "/certificates/cypher.jpg",
       size: "326 KB",
       date: "2025",
@@ -282,7 +284,8 @@ const VFS: Record<string, FileNode[]> = {
       type: "file",
       name: "Gencipher_Runner_Up.jpg",
       path: "/Desktop/Achievements",
-      content: "### GENZIPHER Hackathon 1st Runner Up\n\nOrganized by CSSL GENZ Chapter of UCSC\nYear: 2026",
+      content:
+        "### GENZIPHER Hackathon 1st Runner Up\n\nOrganized by CSSL GENZ Chapter of UCSC\nYear: 2026",
       link: "/certificates/genzipher.jpg",
       size: "175 KB",
       date: "2026",
@@ -502,7 +505,7 @@ export default function FileExplorerApp() {
 
           <section className="flex-1 flex overflow-hidden">
             <div className="flex-1 p-4 overflow-y-auto bg-[#f8fbff]">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
                 {filteredFiles.map((item, idx) => {
                   const isSelected = selectedFile?.name === item.name;
                   return (

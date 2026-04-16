@@ -18,6 +18,8 @@ import {
 import { BsFiletypePdf } from "react-icons/bs";
 import { FcFolder, FcDatabase, FcGlobe, FcApproval, FcDocument } from "react-icons/fc";
 import { clsx } from "clsx";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface FileNode {
   type: "folder" | "file";
@@ -83,7 +85,7 @@ const VFS: Record<string, FileNode[]> = {
 };
 
 export default function FileExplorerApp() {
-  const { windows } = useWindowContext();
+  const { windows, openWindow } = useWindowContext();
   const [currentPath, setCurrentPath] = useState<string>("/");
   const [selectedFile, setSelectedFile] = useState<FileNode | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -244,7 +246,33 @@ export default function FileExplorerApp() {
                       )}
                       onClick={() => handleItemClick(item)}
                       onDoubleClick={() => {
-                        if (item.type === "folder") handleItemClick(item);
+                        if (item.type === "folder") {
+                          handleItemClick(item);
+                        } else if (item.type === "file") {
+                          if (item.name.toLowerCase().endsWith('.md')) {
+                            // Extract just the raw content by removing markdown headings that might be from our VFS structure
+                            // Or let it stay with the heading. Let's just pass the content.
+                            // The VFS has a special content property. Let's process the content a bit or just pass it directly.
+                            let mkdwn = item.content || "Empty file";
+                            if (item.link && mkdwn.includes(item.link) === false) {
+                              mkdwn += `\n\n[Link to source](${item.link})`;
+                            }
+                            openWindow("markdownviewer", { content: mkdwn, name: item.name });
+                          } else if (item.name.toLowerCase().match(/\.(png|jpe?g|gif|webp)$/i)) {
+                            // If it has a link to an image in public folder
+                            if (item.link) {
+                              openWindow("imageviewer", { link: item.link, name: item.name });
+                            }
+                          } else if (item.name.toLowerCase().endsWith('.pdf')) {
+                            // You could create a resume-viewer override or just open the existing Resume App and change its link if supported.
+                            if (item.link) {
+                              // If there's a link to the pdf, open it in browser or fallback.
+                              // Wait, we have the ResumeApp, but it's hardcoded for CV right now.
+                              // Let's just open in new tab for generics
+                              window.open(item.link, '_blank');
+                            }
+                          }
+                        }
                       }}
                     >
                       {item.icon ? (
@@ -298,20 +326,44 @@ export default function FileExplorerApp() {
                     <span className="bg-slate-100 px-2 py-0.5 rounded-full">{selectedFile.date}</span>
                   </div>
 
-                  <div className="text-sm text-slate-600 whitespace-pre-wrap leading-relaxed bg-[#f8fbff] p-4 rounded-xl border border-blue-50 shadow-sm min-h-[100px]">
-                    {selectedFile.content}
+                  <div className="text-sm text-slate-700 leading-relaxed bg-[#f8fbff] p-5 rounded-xl border border-blue-50 shadow-sm min-h-[100px] overflow-auto
+                    [&>h1]:text-xl [&>h1]:font-bold [&>h1]:mb-3 [&>h1]:text-[#E95420]
+                    [&>h2]:text-lg [&>h2]:font-semibold [&>h2]:mt-4 [&>h2]:mb-2 [&>h2]:text-slate-800
+                    [&>h3]:text-base [&>h3]:font-medium [&>h3]:mt-3 [&>h3]:mb-1 [&>h3]:text-slate-800
+                    [&>p]:mb-3 [&>p]:leading-relaxed
+                    [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:mb-3 [&>ul>li]:mb-1
+                    [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:mb-3 [&>ol>li]:mb-1
+                    [&>a]:text-blue-600 [&>a]:underline [&>a:hover]:text-blue-800
+                    [&>pre]:bg-slate-800 [&>pre]:p-3 [&>pre]:rounded-md [&>pre]:overflow-x-auto [&>pre]:mb-3 [&>pre]:text-slate-200
+                    [&>code]:bg-slate-200 [&>code]:px-1.5 [&>code]:py-0.5 [&>code]:rounded [&>code]:text-red-600
+                  ">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {selectedFile.content || "Empty file."}
+                    </ReactMarkdown>
                   </div>
 
                   {selectedFile.link && (
-                    <a
-                      href={selectedFile.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => {
+                        if (selectedFile.name.toLowerCase().endsWith('.md')) {
+                          let mkdwn = selectedFile.content || "Empty file";
+                          if (selectedFile.link && mkdwn.includes(selectedFile.link) === false) {
+                            mkdwn += `\n\n[Link to source](${selectedFile.link})`;
+                          }
+                          openWindow("markdownviewer", { content: mkdwn, name: selectedFile.name });
+                        } else if (selectedFile.name.toLowerCase().match(/\.(png|jpe?g|gif|webp)$/i)) {
+                          openWindow("imageviewer", { link: selectedFile.link, name: selectedFile.name });
+                        } else if (selectedFile.name.toLowerCase().endsWith('.pdf')) {
+                          window.open(selectedFile.link, '_blank');
+                        } else {
+                          window.open(selectedFile.link, '_blank');
+                        }
+                      }}
                       className="mt-8 flex items-center justify-center space-x-2 w-full py-3 bg-[#E95420] hover:bg-[#E95420]/90 text-white rounded-xl transition-all font-bold text-sm shadow-lg shadow-[#E95420]/20 active:scale-95"
                     >
                       <FiExternalLink />
                       <span>Execute / View Source</span>
-                    </a>
+                    </button>
                   )}
                 </div>
               </aside>

@@ -10,6 +10,7 @@ import {
   FiUser,
   FiPackage,
   FiFileText,
+  FiImage,
 } from "react-icons/fi";
 import { FaEnvelope, FaTerminal, FaUserCircle, FaUbuntu } from "react-icons/fa";
 import { BsFolder2Open, BsCpu, BsSearch, BsFiletypePdf } from "react-icons/bs";
@@ -129,6 +130,46 @@ export default function Taskbar() {
               </div>
             );
           })}
+
+          {/* Dynamic Apps (Image/Markdown Viewer) */}
+          {(["imageviewer", "markdownviewer"] as AppId[])
+            .filter((id) => windows[id].isOpen)
+            .map((id) => {
+              const isActive = focusedWindow === id;
+              const icon = id === "imageviewer" ? <FiImage size={18} /> : <FiFileText size={18} />;
+              const label = windows[id].title;
+
+              return (
+                <div
+                  key={id}
+                  onClick={() => openWindow(id)}
+                  className={clsx(
+                    "group relative w-11 h-11 flex items-center justify-center rounded-md cursor-pointer transition-all duration-200",
+                    "hover:bg-white/10 active:scale-95 bg-white/5",
+                  )}
+                  title={label}
+                >
+                  <div
+                    className={clsx(
+                      "w-8 h-8 rounded-md flex items-center justify-center transition-all duration-200",
+                      isActive
+                        ? "text-[#ffd1bf] bg-[#E95420]/35 shadow-inner"
+                        : "text-gray-200 bg-white/5",
+                    )}
+                  >
+                    {icon}
+                  </div>
+                  <div
+                    className={clsx(
+                      "absolute bottom-0 h-1 bg-[#E95420] rounded-t-md transition-all duration-200",
+                      isActive
+                        ? "w-5 shadow-[0_0_8px_#E95420]"
+                        : "w-1.5 opacity-50",
+                    )}
+                  />
+                </div>
+              );
+            })}
         </div>
 
         {/* Right side: System Tray */}

@@ -17,6 +17,8 @@ import AboutApp from "../apps/AboutApp";
 import ResumeApp from "../apps/ResumeApp";
 import ContactApp from "../apps/ContactApp";
 import SkillsApp from "../apps/SkillsApp";
+import ImageViewerApp from "../apps/ImageViewerApp";
+import MarkdownViewerApp from "../apps/MarkdownViewerApp";
 import UbuntuCyberWallpaper from "../3d/UbuntuCyberWallpaper";
 
 // We'll use a direct SVG for Ubuntu
@@ -83,6 +85,8 @@ export default function Desktop() {
           <ResumeApp />
           <ContactApp />
           <SkillsApp />
+          <ImageViewerApp />
+          <MarkdownViewerApp />
         </div>
       </div>
 

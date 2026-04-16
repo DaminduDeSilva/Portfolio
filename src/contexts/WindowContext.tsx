@@ -9,7 +9,9 @@ export type AppId =
   | "projects"
   | "skills"
   | "contact"
-  | "settings";
+  | "settings"
+  | "imageviewer"
+  | "markdownviewer";
 
 export interface WindowData {
   id: AppId;
@@ -75,6 +77,20 @@ const defaultWindows: Record<AppId, WindowData> = {
   settings: {
     id: "settings",
     title: "Settings - Display",
+    isOpen: false,
+    isMinimized: false,
+    zIndex: 10,
+  },
+  imageviewer: {
+    id: "imageviewer",
+    title: "Image Viewer",
+    isOpen: false,
+    isMinimized: false,
+    zIndex: 10,
+  },
+  markdownviewer: {
+    id: "markdownviewer",
+    title: "Document Preview",
     isOpen: false,
     isMinimized: false,
     zIndex: 10,

@@ -136,7 +136,12 @@ export default function Taskbar() {
             .filter((id) => windows[id].isOpen)
             .map((id) => {
               const isActive = focusedWindow === id;
-              const icon = id === "imageviewer" ? <FiImage size={18} /> : <FiFileText size={18} />;
+              const icon =
+                id === "imageviewer" ? (
+                  <FiImage size={18} />
+                ) : (
+                  <FiFileText size={18} />
+                );
               const label = windows[id].title;
 
               return (

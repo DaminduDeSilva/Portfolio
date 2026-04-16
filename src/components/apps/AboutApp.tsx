@@ -283,25 +283,30 @@ export default function AboutApp() {
           <div className="text-gray-800">
             <h2 className="text-2xl font-bold mb-4 text-[#E95420]">Awards & Achievements</h2>
             <div className="bg-gray-50 p-4 border border-gray-200 rounded space-y-3 shadow-inner">
+              
               <div className="flex items-start">
                 <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
-                <p className="text-gray-800"><b>Cybershield 4.0 Finalist</b> – 2025, organized by SLIIT</p>
+                <p className="text-gray-800"><b>Cybershield 4.0 Finalist</b> – 2025, organized by IEEE Computer Society of SLIIT in collaboration with Hashx</p>
               </div>
               <div className="flex items-start">
                 <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
-                <p className="text-gray-800"><b>CryptX Finalist</b> – 2025, organized by ICTS-USJ</p>
+                <p className="text-gray-800"><b>CryptX Finalist</b> – 2025, organized by Faculty of Technology, University of Sri Jayewardenepura</p>
               </div>
               <div className="flex items-start">
                 <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
-                <p className="text-gray-800"><b>Devthon 3.0 2nd Runners Up</b> –2026, organized by University of Moratuwa</p>
+                <p className="text-gray-800"><b>DEV{'{'}thon{'}'} 3.0 2nd Runners Up</b> – 2026, organized by Rotaract Club of University of Moratuwa</p>
               </div>
               <div className="flex items-start">
                 <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
-                <p className="text-gray-800"><b>Gencipher 1st Runner Up</b> –2026, organized by UCSC</p>
+                <p className="text-gray-800"><b>GENZIPHER Hackathon 1st Runner Up</b> – 2026, organized by CSSL GENZ Chapter of UCSC</p>
               </div>
               <div className="flex items-start">
                 <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
-                <p className="text-gray-800"><b>CircraCTF 1st Runner Up</b> –2025, organized by Cicra Campus</p>
+                <p className="text-gray-800"><b>Capture The Flag (CTF) Competition 1st Runner Up</b> – 2025, organized by CICRA Holdings / Daily FT</p>
+              </div>
+              <div className="flex items-start">
+                <FiCheckCircle className="text-[#E95420] mt-1 shrink-0 mr-3" />
+                <p className="text-gray-800"><b>Cypher 3.0 - Inside a Hacker's Mind</b> – 2025, organized by IEEE Student Branch of KDU</p>
               </div>
 
               <div className="mt-4 pt-4 border-t border-gray-300">

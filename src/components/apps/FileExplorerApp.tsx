@@ -36,6 +36,7 @@ interface FileNode {
 const VFS: Record<string, FileNode[]> = {
   "/": [
     { type: "folder", name: "Desktop", path: "/Desktop", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
+    { type: "file", name: "Damindu_De_Silva_CV.pdf", path: "/Desktop", content: "### Damindu De Silva - Senior Penetration Tester\n\nExpert in offensive security, vulnerability research, and full-stack development.\n\n[Official PDF Available]", link: "/resume.pdf", size: "1.2 MB", date: "Today", icon: <BsFiletypePdf size={44} className="text-red-500 mb-2" /> },
     { type: "folder", name: "Projects", path: "/Projects", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
     { type: "folder", name: "Documents", path: "/Documents", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
     { type: "folder", name: "Downloads", path: "/Downloads", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
@@ -45,10 +46,10 @@ const VFS: Record<string, FileNode[]> = {
     { type: "folder", name: "Achievements", path: "/Desktop/Achievements", icon: <FcApproval size={44} className="drop-shadow mb-2" /> },
     { type: "file", name: "About_me.deb", path: "/Desktop", content: "### Ubuntu Package: About Me\n\nThis is a simulated installer for my professional profile app.", size: "450 KB", date: "Recent", icon: <FiPackage size={44} className="text-[#E95420] mb-2" /> },
     { type: "file", name: "technologies.html", path: "/Desktop", content: "### Tech Stack Config\n\nA JSON configuration file containing my full technology stack proficiency.", size: "12 KB", date: "Recent", icon: <FiFileText size={44} className="text-cyan-500 mb-2" /> },
+    { type: "file", name: "Damindu_De_Silva_CV.pdf", path: "/Desktop", content: "### Damindu De Silva - Senior Penetration Tester\n\nExpert in offensive security, vulnerability research, and full-stack development.\n\n[Official PDF Available]", link: "/resume.pdf", size: "1.2 MB", date: "Today", icon: <BsFiletypePdf size={44} className="text-red-500 mb-2" /> },
     { type: "folder", name: "Projects", path: "/Projects", icon: <FcFolder size={44} className="drop-shadow mb-2" /> },
   ],
   "/Documents": [
-    { type: "file", name: "Resume_2025.pdf", path: "/Documents", content: "### Damindu De Silva - Senior Penetration Tester\n\nExpert in offensive security, vulnerability research, and full-stack development.\n\n[Official PDF Available]", link: "/resume.pdf", size: "1.2 MB", date: "Today", icon: <BsFiletypePdf size={44} className="text-red-500 mb-2" /> },
     { type: "file", name: "Certifications.txt", path: "/Documents", content: "### Professional Certifications\n\n- Linux Command Line: From Zero to Hero\n- Metasploit Beginner to Professional\n- OWASP Web Security Assessment", size: "4 KB", date: "2025", icon: <FcDocument size={44} className="drop-shadow mb-2" /> },
   ],
   "/Projects": [
@@ -342,29 +343,7 @@ export default function FileExplorerApp() {
                     </ReactMarkdown>
                   </div>
 
-                  {selectedFile.link && (
-                    <button
-                      onClick={() => {
-                        if (selectedFile.name.toLowerCase().endsWith('.md')) {
-                          let mkdwn = selectedFile.content || "Empty file";
-                          if (selectedFile.link && mkdwn.includes(selectedFile.link) === false) {
-                            mkdwn += `\n\n[Link to source](${selectedFile.link})`;
-                          }
-                          openWindow("markdownviewer", { content: mkdwn, name: selectedFile.name });
-                        } else if (selectedFile.name.toLowerCase().match(/\.(png|jpe?g|gif|webp)$/i)) {
-                          openWindow("imageviewer", { link: selectedFile.link, name: selectedFile.name });
-                        } else if (selectedFile.name.toLowerCase().endsWith('.pdf')) {
-                          window.open(selectedFile.link, '_blank');
-                        } else {
-                          window.open(selectedFile.link, '_blank');
-                        }
-                      }}
-                      className="mt-8 flex items-center justify-center space-x-2 w-full py-3 bg-[#E95420] hover:bg-[#E95420]/90 text-white rounded-xl transition-all font-bold text-sm shadow-lg shadow-[#E95420]/20 active:scale-95"
-                    >
-                      <FiExternalLink />
-                      <span>Execute / View Source</span>
-                    </button>
-                  )}
+                  
                 </div>
               </aside>
             )}

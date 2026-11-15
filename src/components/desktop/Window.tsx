@@ -196,7 +196,9 @@ export default function Window({
         className="relative h-10 w-full flex items-center justify-end px-3 cursor-grab active:cursor-grabbing select-none text-white shrink-0 border-b border-[#E95420]/20 bg-[#3a0f2c]/80"
         onPointerDown={(e) => {
           focusWindow(id);
-          dragControls.start(e);
+          if (!isMaximized) {
+            dragControls.start(e);
+          }
         }}
         onDoubleClick={() => toggleMaximize()}
       >
@@ -206,7 +208,10 @@ export default function Window({
 
         <div className="flex items-center gap-3 z-10">
           <button
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
               minimizeWindow(id);
             }}
             className="w-5 h-5 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center transition-all"
@@ -215,7 +220,10 @@ export default function Window({
             <FiMinus size={12} className="text-white" />
           </button>
           <button
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
               toggleMaximize();
             }}
             className="w-5 h-5 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center transition-all"
@@ -238,7 +246,10 @@ export default function Window({
             )}
           </button>
           <button
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
               closeWindow(id);
             }}
             className="w-5 h-5 rounded-full bg-[#E95420] hover:bg-red-500 shadow-md flex items-center justify-center transition-all"
